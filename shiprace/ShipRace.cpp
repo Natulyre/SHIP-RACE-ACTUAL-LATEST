@@ -14,6 +14,7 @@ ShipRace::ShipRace()
 	//Load our screens
 	Textures->LoadTexture(Texture::TITLE_SCREEN, "TitleScreen.png");
 	Textures->LoadTexture(Texture::GAMEOVER_SCREEN, "GameOver.png");
+	Textures->LoadTexture(Texture::MERMAID, "Mermaid.jpg");
 
 	//Load our music
 	Sounds->LoadSound(Sound::Game, "Wave Ocean.mp3");
@@ -33,11 +34,27 @@ ShipRace::ShipRace()
 	mGameOverScreen = new Sprite(Texture::GAMEOVER_SCREEN);
 	InitScreen(mStartingScreen);
 	InitScreen(mGameOverScreen);
+	
+	//And our text
+	mStart = new Text(35,15);
+	mStart->SetText("Press Space/Enter to follow the mermaid's call.");
+	mStart->SetColor(0, 0, 0);
+	mStart->SetFlashing(true);
+	mGameOver = new Text(50,20);
+	mGameOver->SetText("You've failed to reach the mermaid...");
+	mGameOver->SetColor(255, 0, 0);
+	mGameOver->SetHeight(-150);
+	mEnd = new Text(30,10);
+	mEnd->SetText("Press Space/Enter to go back to the main menu or R to retry.");
+	mEnd->SetFlashing(true);
+	mEnd->SetColor(0, 0, 0);
+	mEnd->SetHeight(150);
 
 	//The random generator is initialized.
 	srand(time(0));
 
 	ChangeState(States::Starting);
+
 }
 
 ShipRace::~ShipRace()
@@ -45,6 +62,9 @@ ShipRace::~ShipRace()
 	delete mWorld;
 	delete mStartingScreen;
 	delete mGameOverScreen;
+	delete mStart;
+	delete mGameOver;
+	delete mEnd;
 }
 
 //Initialize a sprite's position to be correctly displayed in front of the camera
@@ -97,6 +117,9 @@ void ShipRace::ChangeState(States newState)
 		AudioSys->stopAllSounds();
 		AudioSys->play2D(Sounds->Get(Sound::Intro));
 		gEngine->GetCamera()->SetCamPos(D3DXVECTOR3(0, 1, SPRITE_CAMERA_Z));
+		mStart->SetActive(true);
+		mEnd->SetActive(false);
+		mGameOver->SetActive(false);
 		mStartingScreen->SetActive(true);
 		mGameOverScreen->SetActive(false);
 		mWorld->SetActive(false);
@@ -104,7 +127,10 @@ void ShipRace::ChangeState(States newState)
 	case Playing:
 		AudioSys->stopAllSounds();
 		AudioSys->play2D(Sounds->Get(Sound::Game));
-		gEngine->GetCamera()->SetCamPos(D3DXVECTOR3(0,1, GAME_CAMERA_Z));
+		gEngine->GetCamera()->SetCamPos(D3DXVECTOR3(0, 1, GAME_CAMERA_Z));
+		mStart->SetActive(false);
+		mEnd->SetActive(false);
+		mGameOver->SetActive(false);
 		mStartingScreen->SetActive(false);
 		mGameOverScreen->SetActive(false);
 		mWorld->SetActive(true);
@@ -114,6 +140,9 @@ void ShipRace::ChangeState(States newState)
 		AudioSys->stopAllSounds();
 		AudioSys->play2D(Sounds->Get(Sound::Defeat));
 		gEngine->GetCamera()->SetCamPos(D3DXVECTOR3(0, 1, SPRITE_CAMERA_Z));
+		mStart->SetActive(false);
+		mEnd->SetActive(true);
+		mGameOver->SetActive(true);
 		mStartingScreen->SetActive(false);
 		mGameOverScreen->SetActive(true);
 		mWorld->SetActive(false);

@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "World.h"
 #include "Sprite.h"
+#include "Text.h"
 
 enum States
 {
@@ -26,6 +27,9 @@ public:
 private:
 
 	World* mWorld;
+	Text* mStart;
+	Text* mGameOver;
+	Text* mEnd;
 	States mCurrentState;
 	Sprite* mStartingScreen;
 	Sprite* mGameOverScreen;

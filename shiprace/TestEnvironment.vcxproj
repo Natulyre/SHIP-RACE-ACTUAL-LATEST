@@ -93,11 +93,13 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="ShipRace.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="Tunnel.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CubeWall.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="ResourceIDs.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="ShipRace.h" />

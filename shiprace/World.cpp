@@ -22,6 +22,8 @@ World::World()
 	mTunnel = new Tunnel();
 	mShip = new Ship();
 	mCubeMeasure = new CubeWall();
+	mLives = new Text(20, 10);
+	mMermaid = new Sprite(Texture::MERMAID);
 	mCubeMeasure->SetPosition(0.f, 30.f, CUBE_Z);
 
 	//Create our 5 cube walls used as obstacles
@@ -41,6 +43,8 @@ World::~World()
 	delete mShip;
 	delete mTunnel;
 	delete mCubeMeasure;
+	delete mLives;
+	delete mMermaid;
 
 	//Clean up our cubewall vector.
 	for (std::vector<CubeWall*>::iterator iter = mCubeWallVector.begin(); iter != mCubeWallVector.end();)
@@ -74,6 +78,9 @@ void World::SetActive(bool toggle)
 	mShip->SetActive(toggle);
 	mTunnel->SetActive(toggle);
 	mCubeMeasure->SetActive(toggle);
+	mLives->SetActive(toggle);
+	mMermaid->SetActive(false);
+//	mMermaid->SetActive(toggle);
 	for each (CubeWall* c in mCubeWallVector)
 	{
 		c->SetActive(toggle);
@@ -84,6 +91,8 @@ void World::Update()
 {
 	//As long as the player has more than one life, we'll keep on updating our walls
 	UpdateWallPosition();
+	mTextToDisplay = "Lives: " + mShip->GetLives();
+	//mLives->SetText(mTextToDisplay.c_str());
 	if (mShip->GetLives() == 0)
 	{
 		mIsGameOver = true;

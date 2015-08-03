@@ -5,6 +5,8 @@
 #include "Ship.h"
 #include "Tunnel.h"
 #include "CubeWall.h"
+#include "Text.h"
+#include "Sprite.h"
 
 class World :
 	public Component
@@ -30,6 +32,9 @@ private:
 
 	Tunnel* mTunnel;
 	Ship* mShip;
+	Sprite* mMermaid;
+	Text* mLives;
+	std::string mTextToDisplay;
 
 	CubeWall* mCubeMeasure;
 

@@ -14,7 +14,8 @@ namespace Texture
 	enum ID
 	{
 		TITLE_SCREEN,
-		GAMEOVER_SCREEN
+		GAMEOVER_SCREEN,
+		MERMAID
 	};
 }
 
